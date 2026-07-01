@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -59,10 +59,23 @@
         }
 
         @keyframes floatUpAnimation {
-            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-115vh) translateX(60px) rotate(360deg); opacity: 0; }
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(-115vh) translateX(60px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         /* ================= 核心修复：锁定画册最大高度，彻底防止遮挡文字 ================= */
@@ -95,22 +108,22 @@
             position: relative;
         }
 
-        .slider img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* ✨ 关键魔法：contain 配合绝对定位和四向居中，
+            .slider img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                /* ✨ 关键魔法：contain 配合绝对定位和四向居中，
                能让横图居中贴合，竖图自动收窄在正中间显示全貌，且绝不撑大容器 */
-            object-fit: contain; 
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out; /* 丝滑无缝淡入淡出 */
-        }
+                object-fit: contain;
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out; /* 丝滑无缝淡入淡出 */
+            }
 
-        .slider img.active {
-            opacity: 1;
-        }
+                .slider img.active {
+                    opacity: 1;
+                }
 
         /* --- 信件主体内容（给它一个平级的纵向间距，使其永远在图片下方） --- */
         .letter-content {
@@ -149,10 +162,10 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
         }
 
-        .paragraph.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+            .paragraph.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
 
         .highlight-yellow {
             color: var(--splat-yellow);
@@ -193,9 +206,9 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .nice-btn:active {
-            transform: scale(0.95);
-        }
+            .nice-btn:active {
+                transform: scale(0.95);
+            }
 
         .nice-pop {
             position: fixed;
@@ -209,8 +222,15 @@
         }
 
         @keyframes popOut {
-            0% { transform: scale(0.5) translate(0, 0); opacity: 1; }
-            100% { transform: scale(1.6) translate(var(--mx), var(--my)); opacity: 0; }
+            0% {
+                transform: scale(0.5) translate(0, 0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.6) translate(var(--mx), var(--my));
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -233,19 +253,19 @@
 
     <div class="letter-content">
         <div class="salutation">给全世界最棒的盼盼/uno：</div>
-        
+
         <div class="paragraph">好快啊，居然已经和你在蛮颓镇并肩作战整整一年了。</div>
-        
+
         <div class="paragraph">缘分真的很奇妙，深夜，匹配大厅里，互动起来的墨汁，一次偶遇，两个耐心的海产，居然能让地球自转<span class="highlight-yellow">365天</span>！</div>
-        
+
         <div class="paragraph">我们共享着蛮颓镇的日光，在热闹的梦幻的祭典夜晚抛出了四季的烟花弹，私房里找角度拍照、用竹狙戳字的是哪只长直又是哪只锅盖？新年的烟花绽放我们又在动森度过美妙的夜晚......枪林弹雨鱿飞鲑打的记忆也实在是深刻🥀狡猾的热腾腾居然敢加速我几百乃至一千个小时！</div>
-        
+
         <div class="paragraph">暑假结束之后，大家都开始忙碌，上线的时间变少了，但幸运的是，我们没有走散。我们好像没有聊过什么宏大的人生命题，但是却为奶蛙创造了一个世界。想要多多看到eno和umi的故事和萌照！</div>
-        
+
         <div class="paragraph">uno是1，是第一，是唯一，谢谢你在一年前的深夜回应了我的跳动！成为喷鱿一周年快乐！噢噢对了你的生日也快了吧！提前祝你生日快乐鱿～希望新的一岁与更远的未来，不管是现生还是游戏都顺顺利，也希望不管我们多久没上线，只要发一只奶蛙，就能回到那个悠然快乐的夏天。</div>
 
         <div class="signature">
-            <p>最爱改游戏名的ovo</p>
+            <p>爱改游戏名的ovo</p>
             <p>2026年 夏</p>
         </div>
     </div>
@@ -255,35 +275,52 @@
     </div>
 
     <script>
-        // --- 颜料流体动画 ---
+    // --- 颜料流体动画（手机端高清完美斑点适配版） ---
         const canvas = document.getElementById('inkCanvas');
         const ctx = canvas.getContext('2d');
 
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+        let width, height;
+        let dpr = window.devicePixelRatio || 1; // 获取手机/电脑的真实屏幕像素比
 
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
+        // 智能调整：手机端让斑点更密集，电脑端保持原有质感
+        let step = window.innerWidth < 600 ? 2 : 4;
+        // 缩放率微调：手机端增大缩放频率，防止斑点变巨大
+        let scaleRate = window.innerWidth < 600 ? 0.012 : 0.005;
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+
+            // 将画布的物理分辨率放大到跟手机屏幕像素一致
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+
+            // 缩放上下文，使得后续绘图代码依然能按正常的 css 像素逻辑走
+            ctx.scale(dpr, dpr);
+        }
+
+        window.addEventListener('resize', resize);
+        resize(); // 初始化调用
 
         let time = 0;
-        const step = 4; 
 
         function drawInkFlow() {
             time += 0.004;
-            ctx.fillStyle = '#ff81d9';
+            ctx.fillStyle = '#ff81d9'; // 底色
             ctx.fillRect(0, 0, width, height);
-            ctx.fillStyle = '#00e2e6';
+            ctx.fillStyle = '#00e2e6'; // 斑点颜色
 
             for (let y = 0; y < height; y += step) {
                 for (let x = 0; x < width; x += step) {
-                    let nx = x * 0.005;
-                    let ny = y * 0.005;
-                    let val = Math.sin(nx + time) + 
-                              Math.sin(ny + time * 0.8) + 
-                              Math.sin((nx + ny + time) * 0.5) + 
-                              Math.cos(Math.sqrt(nx*nx + ny*ny) - time);
+                    // 使用适配后的 scaleRate 替代原本固定的 0.005
+                    let nx = x * scaleRate;
+                    let ny = y * scaleRate;
+                    let val = Math.sin(nx + time) +
+                        Math.sin(ny + time * 0.8) +
+                        Math.sin((nx + ny + time) * 0.5) +
+                        Math.cos(Math.sqrt(nx * nx + ny * ny) - time);
                     if (val > 0.3) {
                         ctx.fillRect(x, y, step, step);
                     }
@@ -292,13 +329,12 @@
             requestAnimationFrame(drawInkFlow);
         }
         drawInkFlow();
-
         // --- 纯净淡入淡出轮播（完全独立，不影响任何外部元素的排版） ---
         const imgs = document.querySelectorAll('#imageSlider img');
         let currentImgIndex = 0;
 
         setInterval(() => {
-            if(imgs.length <= 1) return;
+            if (imgs.length <= 1) return;
             imgs[currentImgIndex].classList.remove('active');
             currentImgIndex = (currentImgIndex + 1) % imgs.length;
             imgs[currentImgIndex].classList.add('active');
@@ -308,7 +344,7 @@
         const paragraphs = document.querySelectorAll('.paragraph');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('show');
                 }
             });
@@ -318,7 +354,7 @@
 
         // --- 粒子漂浮 ---
         const pool = ['✨', '🐙', '🦑'];
-        
+
         function createFloatingParticle() {
             const particle = document.createElement('div');
             particle.classList.add('particle');
@@ -330,14 +366,14 @@
             setTimeout(() => { particle.remove(); }, duration * 1000);
         }
 
-        for(let i=0; i<4; i++) {
+        for (let i = 0; i < 4; i++) {
             setTimeout(createFloatingParticle, i * 600);
         }
-        setInterval(createFloatingParticle, 130); 
+        setInterval(createFloatingParticle, 500);
 
         // --- 点击发射 Nicedan ---
         function fireNice(e) {
-            for(let i=0; i<6; i++) {
+            for (let i = 0; i < 6; i++) {
                 const pop = document.createElement('div');
                 pop.classList.add('nice-pop');
                 pop.innerText = 'Nice';
