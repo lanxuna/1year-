@@ -86,7 +86,7 @@
             margin: 0 auto;
             position: relative;
             border-bottom: 4px dashed var(--splat-yellow);
-            background: #5c00e652; /* 半透明底 */
+            background: rgb(84, 246, 251, 0.34); /* 半透明底 */
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             border-radius: 16px 16px 0 0; /* 顶部微微圆角 */
@@ -135,11 +135,11 @@
             line-height: 1.9;
             font-size: 16px;
             letter-spacing: 1px;
-            background: rgb(3, 250, 242, 0.25);
+            background: rgb(54, 250, 250, 0.31);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgb(46, 236, 248, 0.10);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
@@ -308,7 +308,7 @@
 
         function drawInkFlow() {
             time += 0.004;
-            ctx.fillStyle = '#00eef'; // 底色
+            ctx.fillStyle = '#44fcfc'; // 底色
             ctx.fillRect(0, 0, width, height);
             ctx.fillStyle = '#feb4d8'; // 斑点颜色
 
