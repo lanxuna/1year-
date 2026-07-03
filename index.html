@@ -239,30 +239,36 @@
     <canvas id="inkCanvas"></canvas>
     <div class="vignette-overlay"></div>
 
-    <div class="slider-container">
-        <div class="slider" id="imageSlider">
-            <img src="photo1.jpg" alt="回忆1" class="active">
-            <img src="photo2.jpg" alt="回忆2">
-            <img src="photo3.jpg" alt="回忆3">
-            <img src="4.jpg" alt="回忆4">
-            <img src="5.jpg" alt="回忆5">
-            <img src="6.jpg" alt="回忆6">
-            <img src="7.jpg" alt="回忆7">
-        </div>
+<div class="slider-container">
+    <div class="slider" id="imageSlider">
+        <?php
+            // 定义图片存放的文件夹名称（假设你的图片都放在同级目录下的 images 文件夹里）
+            $dir = "images/"; 
+            // 扫描该目录下所有的 jpg, png, jpeg 文件
+            $images = glob($dir . "*.{jpg,jpeg,png,gif}", GLOB_BRACE);
+            
+            // 循环输出 img 标签
+            foreach($images as $index => $image) {
+                // 第一张图片加上 'active' 类
+                $activeClass = ($index === 0) ? 'class="active"' : '';
+                echo '<img src="' . $image . '" alt="回忆' . ($index + 1) . '" ' . $activeClass . '>' . "\n";
+            }
+        ?>
     </div>
+</div>
 
     <div class="letter-content">
         <div class="salutation">给全世界最棒的盼盼/uno：</div>
 
-        <div class="paragraph">好快啊，居然已经和你在蛮颓镇并肩作战整整一年了。</div>
+        <div class="paragraph">好快啊，居然认识一年了。</div>
 
         <div class="paragraph">缘分真的很奇妙，深夜，匹配大厅里，互动起来的墨汁，一次偶遇，两个耐心的海产，居然能让地球自转<span class="highlight-yellow">365天</span>！</div>
 
-        <div class="paragraph">我们共享着蛮颓镇的日光，在热闹的梦幻的祭典夜晚抛出了四季的烟花弹，私房里找角度拍照、用竹狙戳字的是哪只长直又是哪只锅盖？新年的烟花绽放我们又在动森度过美妙的夜晚......枪林弹雨鱿飞鲑打的记忆也实在是深刻🥀狡猾的热腾腾居然敢加速我几百乃至一千个小时！</div>
+        <div class="paragraph">不像天天下雨的这里，蛮颓镇的阳光很是灿烂，偶们在热闹的梦幻的祭典夜晚抛出了四季的烟花弹，私房里找角度拍照、用竹狙戳字的是哪只长直又是哪只锅盖？新年的烟花绽放我们又在动森度过美妙的夜晚......枪林弹雨鱿飞鲑打的记忆也实在是深刻🥀狡猾的热腾腾居然敢加速我几百乃至一千个小时！</div>
 
         <div class="paragraph">暑假结束之后，大家都开始忙碌，上线的时间变少了，但幸运的是，我们没有走散。我们好像没有聊过什么宏大的人生命题，但是却为奶蛙创造了一个世界。想要多多看到eno和umi的故事和萌照！</div>
 
-        <div class="paragraph">uno是1，是第一，是唯一，谢谢你在一年前的深夜回应了我的跳动！成为喷鱿一周年快乐！噢噢对了你的生日也快了吧！提前祝你生日快乐鱿～希望新的一岁与更远的未来，不管是现生还是游戏都顺顺利，也希望不管我们多久没上线，只要发一只奶蛙，就能回到那个悠然快乐的夏天。</div>
+        <div class="paragraph">uno是1，是第一，是唯一，谢谢你在一年前的深夜回应了我的蛄蛹！成为喷鱿一周年快乐！噢噢对了你的生日也快了，提前祝你生日快乐鱿～希望在你新的一岁与更远的未来，不管是现生还是游戏都顺顺利，也希望不管我们多久没上线，只要发一只奶蛙，就能回到那个悠然快乐的夏天。</div>
 
         <div class="signature">
             <p>爱改游戏名的ovo</p>
