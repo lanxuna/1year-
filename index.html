@@ -284,60 +284,63 @@
     </div>
 
     <script>
-    // --- 颜料流体动画（手机端高清完美斑点适配版） ---
-        const canvas = document.getElementById('inkCanvas');
-        const ctx = canvas.getContext('2d');
+   // --- 颜料流体动画（多色块、多边细节优化版） ---
+    const canvas = document.getElementById('inkCanvas');
+    const ctx = canvas.getContext('2d');
 
-        let width, height;
-        let dpr = window.devicePixelRatio || 1; // 获取手机/电脑的真实屏幕像素比
+    let width, height;
+    let dpr = window.devicePixelRatio || 1; 
 
-        // 智能调整：手机端让斑点更密集，电脑端保持原有质感
-        let step = window.innerWidth < 600 ? 2 : 4;
-        // 缩放率微调：手机端增大缩放频率，防止斑点变巨大
-        let scaleRate = window.innerWidth < 600 ? 0.012 : 0.005;
+    // 1. 【色块多一点】通过调大 scaleRate 增加画面中的整体色块密度
+    let scaleRate = window.innerWidth < 600 ? 0.025 : 0.012; 
+    let step = window.innerWidth < 600 ? 2 : 4; 
 
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
+    function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.scale(dpr, dpr);
+    }
 
-            // 将画布的物理分辨率放大到跟手机屏幕像素一致
-            canvas.width = width * dpr;
-            canvas.height = height * dpr;
-            canvas.style.width = width + 'px';
-            canvas.style.height = height + 'px';
+    window.addEventListener('resize', resize);
+    resize();
 
-            // 缩放上下文，使得后续绘图代码依然能按正常的 css 像素逻辑走
-            ctx.scale(dpr, dpr);
-        }
+    let time = 0;
 
-        window.addEventListener('resize', resize);
-        resize(); // 初始化调用
+    function drawInkFlow() {
+        // 2. 【变形速度】原本是 0.004，改成 0.008 让墨水变形和流动速度翻倍
+        time += 0.008; 
+        
+        ctx.fillStyle = '#9dfaf2'; // 底色
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = '#ffbfdf'; // 斑点颜色
 
-        let time = 0;
+        for (let y = 0; y < height; y += step) {
+            for (let x = 0; x < width; x += step) {
+                let nx = x * scaleRate;
+                let ny = y * scaleRate;
+                
+                // 3. 【形状边数多一些】在原有公式基础上，额外叠加了 2 层高频正余弦（nx * 3 / ny * 3）
+                // 这会让原本圆润的墨水边缘产生更多的锯齿、折角和多边形伪影
+                let val = Math.sin(nx + time) +
+                          Math.sin(ny + time * 0.8) +
+                          Math.sin((nx + ny + time) * 0.5) +
+                          Math.cos(Math.sqrt(nx * nx + ny * ny) - time) +
+                          Math.sin(nx * 3.0 - time) * 0.4 + // 👈 新增高频细节层 1
+                          Math.cos(ny * 2.5 + time) * 0.4;  // 👈 新增高频细节层 2
 
-        function drawInkFlow() {
-            time += 0.004;
-            ctx.fillStyle = '#9dfaf2'; // 底色
-            ctx.fillRect(0, 0, width, height);
-            ctx.fillStyle = '#ffbfdf'; // 斑点颜色
-
-            for (let y = 0; y < height; y += step) {
-                for (let x = 0; x < width; x += step) {
-                    // 使用适配后的 scaleRate 替代原本固定的 0.005
-                    let nx = x * scaleRate;
-                    let ny = y * scaleRate;
-                    let val = Math.sin(nx + time) +
-                        Math.sin(ny + time * 0.8) +
-                        Math.sin((nx + ny + time) * 0.5) +
-                        Math.cos(Math.sqrt(nx * nx + ny * ny) - time);
-                    if (val > 0.3) {
-                        ctx.fillRect(x, y, step, step);
-                    }
+                // 4. 【色块面积控制】阈值降低（从 0.3 降到 0.1），配合上面的新公式，能让粉色色块数量更多、更丰富
+                if (val > 0.1) { 
+                    ctx.fillRect(x, y, step, step);
                 }
             }
-            requestAnimationFrame(drawInkFlow);
         }
-        drawInkFlow();
+        requestAnimationFrame(drawInkFlow);
+    }
+    drawInkFlow();
         // --- 纯净淡入淡出轮播（完全独立，不影响任何外部元素的排版） ---
         const imgs = document.querySelectorAll('#imageSlider img');
         let currentImgIndex = 0;
