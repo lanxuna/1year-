@@ -292,7 +292,7 @@
     let dpr = window.devicePixelRatio || 1; 
 
     // 1. 【色块多一点】通过调大 scaleRate 增加画面中的整体色块密度
-    let scaleRate = window.innerWidth < 600 ? 0.025 : 0.05; 
+    let scaleRate = window.innerWidth < 600 ? 0.025 : 0.025; 
     let step = window.innerWidth < 600 ? 2 : 4; 
 
     function resize() {
@@ -312,7 +312,7 @@
 
     function drawInkFlow() {
         // 2. 【变形速度】原本是 0.004，改成 0.008 让墨水变形和流动速度翻倍
-        time += 0.058; 
+        time += 0.01; 
         
         ctx.fillStyle = '#9dfaf2'; // 底色
         ctx.fillRect(0, 0, width, height);
