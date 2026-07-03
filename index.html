@@ -1,14 +1,8 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>一周年快乐，uno！</title>
-    <style>
+﻿<style>
         :root {
-            --splat-yellow: #d1e200;
-            --splat-purple: #5c00e6;
-            --text-color: #ffffff;
+            --splat-yellow: #e6ff00; /* 调高亮度的荧光黄绿 */
+            --splat-purple: #7a1aff; /* 更有活力的霓虹紫 */
+            --text-color: #3b2063;   /* 🍇 核心修改：正文换成深浆果紫，既能看清，又比死黑/黑青色高级、多巴胺 */
         }
 
         * {
@@ -17,13 +11,11 @@
             padding: 0;
         }
 
-     body {
+        body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: #111;
-            /* 🔽 1. 全局默认文字加深：从原本的 #303a61 改为更深、更沉稳的黑青色，非常适合配薄荷绿 🔽 */
-            color: #17234d; 
+            color: var(--text-color);
             overflow-x: hidden;
-        }
         }
 
         /* --- 动态颜料流动 Canvas 背景 --- */
@@ -43,7 +35,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle, transparent 30%, #6408ff73 100%);
+            /* 调整暗角颜色，融入一点霓虹紫，让整体不发暗 */
+            background: radial-gradient(circle, transparent 40%, rgba(122, 26, 255, 0.3) 100%);
             z-index: -1;
             pointer-events: none;
         }
@@ -65,42 +58,34 @@
                 transform: translateY(0) translateX(0) rotate(0deg);
                 opacity: 0;
             }
-
-            10% {
-                opacity: 0.8;
-            }
-
-            90% {
-                opacity: 0.8;
-            }
-
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
             100% {
                 transform: translateY(-115vh) translateX(60px) rotate(360deg);
                 opacity: 0;
             }
         }
 
-        /* ================= 核心修复：锁定画册最大高度，彻底防止遮挡文字 ================= */
+        /* 画册最大高度限制 */
         .slider-container {
             width: 100%;
-            max-width: 600px; /* 和下方的文字内容卡片严格等宽，形成整体视觉线 */
-            height: 400px; /* 🔒 电脑端严格锁定最高 400px，竖图再高也只能缩进在这个框里 */
+            max-width: 600px; 
+            height: 400px; 
             margin: 0 auto;
             position: relative;
             border-bottom: 4px dashed var(--splat-yellow);
-            background: #6704fb28; /* 半透明底 */
+            background: rgba(122, 26, 255, 0.15); /* 顶部背景稍微透光 */
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border-radius: 16px 16px 0 0; /* 顶部微微圆角 */
+            border-radius: 16px 16px 0 0; 
             z-index: 2;
-            box-shadow: 0 10px 20px #e2f30a62;
+            box-shadow: 0 10px 20px rgba(230, 255, 0, 0.2);
             overflow: hidden;
         }
 
-        /* 针对手机等小屏幕的自适应高度限制 */
         @media (max-width: 600px) {
             .slider-container {
-                height: 300px; /* 🔒 手机端最高 300px，保证绝不侵占下方文字生存空间 */
+                height: 300px; 
             }
         }
 
@@ -110,89 +95,83 @@
             position: relative;
         }
 
-            .slider img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                /* ✨ 关键魔法：contain 配合绝对定位和四向居中，
-               能让横图居中贴合，竖图自动收窄在正中间显示全貌，且绝不撑大容器 */
-                object-fit: contain;
-                opacity: 0;
-                transition: opacity 0.3s ease-in-out; /* 丝滑无缝淡入淡出 */
-            }
+        .slider img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out; 
+        }
 
-                .slider img.active {
-                    opacity: 1;
-                }
+        .slider img.active {
+            opacity: 1;
+        }
 
-        /* --- 信件主体内容（给它一个平级的纵向间距，使其永远在图片下方） --- */
+        /* --- 💌 信件主体内容（清透薄荷绿底色） --- */
         .letter-content {
             position: relative;
             z-index: 1;
             padding: 30px 20px;
             max-width: 600px;
-            margin: 20px auto; /* 上下保持间距，永远被图片自然向下推，绝不重叠 */
+            margin: 20px auto; 
             line-height: 1.9;
             font-size: 16px;
             letter-spacing: 1px;
-            background: rgb(180, 245, 225, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            
+            /* 🟢 保持明亮、清透的高饱和薄荷绿玻璃质感 */
+            background: rgba(165, 255, 230, 0.75); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255, 255, 255, 0.5); /* 亮白色边框增加剔透感 */
+            box-shadow: 0 15px 35px rgba(122, 26, 255, 0.15); /* 柔和的紫色阴影 */
         }
 
-     .salutation {
+        /* 👑 称呼颜色 */
+        .salutation {
             font-size: 20px;
             font-weight: bold;
-            /* 🔽 2. 开头称呼：原本的荧光黄在浅色底上看不清，改用喷墨极具标志性的深紫罗兰色 🔽 */
-            color: #3b0099; 
+            color: #5200cc; /* 霓虹深紫，跟薄荷绿是绝配对色 */
             margin-bottom: 25px;
-            border-left: 4px solid var(--splat-purple);
+            border-left: 4px solid var(--splat-yellow);
             padding-left: 10px;
-            /* 🔽 3. 给称呼加一层淡淡的白边，防止和薄荷绿背景粘连 🔽 */
-            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
         }
 
+        /* 📄 正文部分（去掉之前沉重的黑色描边，改为轻盈的浅色柔和投影，保证字迹绝不发暗） */
         .paragraph {
             margin-bottom: 22px;
             text-align: justify;
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s ease;
-            /* 🔽 4. 核心关键：原本的黑色阴影（#111）在浅色底上会变成脏脏的墨晕。
-                    现在改用清晰的【白色高亮描边】，就像贴纸的白边一样，不仅让字迹极度清晰，还非常有喷射的街头涂鸦感！ 🔽 */
-            text-shadow: 
-                1px 1px 0px #fff, 
-               -1px -1px 0px #fff, 
-                1px -1px 0px #fff, 
-               -1px 1px 0px #fff;
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6); 
         }
 
-            .paragraph.show {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .paragraph.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
+        /* 🌟 多巴胺高亮色（亮丽的蜜桃粉红/亮橘，专门用来划重点） */
         .highlight-yellow {
-            color: var(--splat-yellow);
+            color: #ff1a75; 
             font-weight: bold;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 0 4px;
+            border-radius: 4px;
         }
 
-        .highlight-purple {
-            color: #b78cff;
-            font-weight: bold;
-        }
-
-  .signature {
+        /* ✍️ 右下角落款（偏紫色系） */
+        .signature {
             text-align: right;
             margin-top: 45px;
             font-size: 14px;
-            color: #4a5568; /* 👈 改为深灰蓝色 */
-            text-shadow: 1px 1px 0px #fff; /* 👈 同样加上白色防吃字底纹 */
+            color: #8a4fff; /* 🦄 亮丽的香芋紫/薰衣草紫 */
+            font-weight: 500;
+            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
         }
 
         /* --- 底部彩蛋按钮 --- */
@@ -212,23 +191,23 @@
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(92,0,230,0.6);
+            box-shadow: 0 5px 20px rgba(122, 26, 255, 0.4);
             transition: transform 0.1s;
             -webkit-tap-highlight-color: transparent;
         }
 
-            .nice-btn:active {
-                transform: scale(0.95);
-            }
+        .nice-btn:active {
+            transform: scale(0.95);
+        }
 
         .nice-pop {
             position: fixed;
-            color: var(--splat-yellow);
+            color: #ff1a75; /* 赞气弹也换成明亮的多巴胺粉色 */
             font-weight: bold;
             font-size: 24px;
             z-index: 99999;
             pointer-events: none;
-            text-shadow: 2px 2px 0px #000;
+            text-shadow: 2px 2px 0px #fff;
             animation: popOut 0.8s ease-out forwards;
         }
 
@@ -237,179 +216,9 @@
                 transform: scale(0.5) translate(0, 0);
                 opacity: 1;
             }
-
             100% {
                 transform: scale(1.6) translate(var(--mx), var(--my));
                 opacity: 0;
             }
         }
     </style>
-</head>
-<body>
-
-    <canvas id="inkCanvas"></canvas>
-    <div class="vignette-overlay"></div>
-
-   <div class="slider-container">
-        <div class="slider" id="imageSlider">
-            <img src="photo1.jpg" alt="回忆1" class="active">
-            <img src="photo2.jpg" alt="回忆2">
-            <img src="photo3.jpg" alt="回忆3">
-            <img src="4.jpg" alt="回忆4">
-            <img src="5.jpg" alt="回忆5">
-            <img src="6.jpg" alt="回忆6">
-            <img src="7.jpg" alt="回忆7">
-            <img src="0703_1.jpg" alt="回忆8">
-            <img src="0703_2.jpg" alt="回忆9">
-            <img src="0703_3.jpg" alt="回忆10">
-            <img src="0703_4.jpg" alt="回忆11">
-            <img src="0703_5.jpg" alt="回忆12">
-            <img src="0703_6.jpg" alt="回忆13">
-            <img src="0703_7.jpg" alt="回忆14">
-            <img src="0703_8.jpg" alt="回忆15">
-            <img src="0703_9.jpg" alt="回忆16">
-        </div>
-    </div>
-
-    <div class="letter-content">
-        <div class="salutation">给全世界最棒的盼盼/uno：</div>
-
-        <div class="paragraph">好快，居然认识一年了。</div>
-
-        <div class="paragraph">缘分真的很奇妙，深夜，匹配大厅里，互动起来的墨汁，一次偶遇，两个耐心的海产，居然能让地球自转<span class="highlight-yellow">365天</span>！</div>
-
-        <div class="paragraph">蛮颓镇的日光是那样灿烂到炫目，像梦一样不真实，在热闹的梦幻的祭典夜晚抛出了四季的烟花弹，私房里找角度拍照、用竹狙戳字的是哪只长直又是哪只锅盖？新年的烟花绽放我们又在动森度过美妙的夜晚......枪林弹雨鱿飞鲑打的记忆也实在是深刻🥀狡猾的热腾腾居然敢加速我几百乃至一千个小时！</div>
-
-        <div class="paragraph">暑假结束之后，大家都开始忙碌，上线的时间变少了，但幸运的是，我们居然还能聊到一块（感谢奶娃）。我们好像没有聊过什么宏大的人生命题，但是却为奶蛙创造了一个世界。喜欢和你聊天，很有意思，我嘴角就没放下来过！这样那样，总之，想要多多看到eno和umi的故事和萌照！</div>
-
-        <div class="paragraph">uno是1，是第一，是唯一，谢谢你在一年前的深夜回应了我的蛄蛹！成为喷鱿一周年快乐！噢噢对了你的生日也快了，提前祝你生日快乐鱿～希望新的一岁与更远的未来，不管是现生还是游戏都顺顺利，也希望不管我们多久没上线，一支奶娃箭，就能回到那个悠然快乐的夏天。</div>
-
-        <div class="signature">
-            <p>爱改游戏名的ovo</p>
-            <p>2026年 夏</p>
-        </div>
-    </div>
-
-    <div class="nice-btn-container">
-        <button class="nice-btn" onclick="fireNice(event)">还记得发射过多少赞气弹吗？</button>
-    </div>
-
-    <script>
-   // --- 颜料流体动画（多色块、多边细节优化版） ---
-    const canvas = document.getElementById('inkCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let width, height;
-    let dpr = window.devicePixelRatio || 1; 
-
-    // 1. 【色块多一点】通过调大 scaleRate 增加画面中的整体色块密度
-    let scaleRate = window.innerWidth < 600 ? 0.025 : 0.025; 
-    let step = window.innerWidth < 600 ? 2 : 4; 
-
-    function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        canvas.style.width = width + 'px';
-        canvas.style.height = height + 'px';
-        ctx.scale(dpr, dpr);
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    let time = 0;
-
-    function drawInkFlow() {
-        // 2. 【变形速度】原本是 0.004，改成 0.008 让墨水变形和流动速度翻倍
-        time += 0.01; 
-        
-        ctx.fillStyle = '#9dfaf2'; // 底色
-        ctx.fillRect(0, 0, width, height);
-        ctx.fillStyle = '#ffbfdf'; // 斑点颜色
-
-        for (let y = 0; y < height; y += step) {
-            for (let x = 0; x < width; x += step) {
-                let nx = x * scaleRate;
-                let ny = y * scaleRate;
-                
-                // 3. 【形状边数多一些】在原有公式基础上，额外叠加了 2 层高频正余弦（nx * 3 / ny * 3）
-                // 这会让原本圆润的墨水边缘产生更多的锯齿、折角和多边形伪影
-                let val = Math.sin(nx + time) +
-                          Math.sin(ny + time * 0.8) +
-                          Math.sin((nx + ny + time) * 0.5) +
-                          Math.cos(Math.sqrt(nx * nx + ny * ny) - time) +
-                          Math.sin(nx * 3.0 - time) * 0.4 + // 👈 新增高频细节层 1
-                          Math.cos(ny * 2.5 + time) * 0.4;  // 👈 新增高频细节层 2
-
-                // 4. 【色块面积控制】阈值降低（从 0.3 降到 0.1），配合上面的新公式，能让粉色色块数量更多、更丰富
-                if (val > 0.1) { 
-                    ctx.fillRect(x, y, step, step);
-                }
-            }
-        }
-        requestAnimationFrame(drawInkFlow);
-    }
-    drawInkFlow();
-        // --- 纯净淡入淡出轮播（完全独立，不影响任何外部元素的排版） ---
-        const imgs = document.querySelectorAll('#imageSlider img');
-        let currentImgIndex = 0;
-
-        setInterval(() => {
-            if (imgs.length <= 1) return;
-            imgs[currentImgIndex].classList.remove('active');
-            currentImgIndex = (currentImgIndex + 1) % imgs.length;
-            imgs[currentImgIndex].classList.add('active');
-        }, 1000);
-
-        // --- 滚动文字逐渐浮现效果 ---
-        const paragraphs = document.querySelectorAll('.paragraph');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        paragraphs.forEach(p => observer.observe(p));
-
-        // --- 粒子漂浮 ---
-        const pool = ['✨', '🐙', '🦑'];
-
-        function createFloatingParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.innerText = pool[Math.floor(Math.random() * pool.length)];
-            particle.style.left = (Math.random() * 95) + 'vw';
-            const duration = (Math.random() * 4 + 5);
-            particle.style.animationDuration = duration + 's';
-            document.body.appendChild(particle);
-            setTimeout(() => { particle.remove(); }, duration * 1000);
-        }
-
-        for (let i = 0; i < 4; i++) {
-            setTimeout(createFloatingParticle, i * 600);
-        }
-        setInterval(createFloatingParticle, 500);
-
-        // --- 点击发射 Nicedan ---
-        function fireNice(e) {
-            for (let i = 0; i < 6; i++) {
-                const pop = document.createElement('div');
-                pop.classList.add('nice-pop');
-                pop.innerText = 'Nice';
-                const mx = (Math.random() - 0.5) * 300 + 'px';
-                const my = (Math.random() - 0.8) * 300 + 'px';
-                pop.style.setProperty('--mx', mx);
-                pop.style.setProperty('--my', my);
-                pop.style.left = e.clientX + 'px';
-                pop.style.top = e.clientY + 'px';
-                document.body.appendChild(pop);
-                setTimeout(() => { pop.remove(); }, 800);
-            }
-        }
-    </script>
-</body>
-</html>
