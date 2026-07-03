@@ -17,11 +17,13 @@
             padding: 0;
         }
 
-        body {
+     body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: #111;
-            color: var(--text-color);
+            /* 🔽 1. 全局默认文字加深：从原本的 #303a61 改为更深、更沉稳的黑青色，非常适合配薄荷绿 🔽 */
+            color: #17234d; 
             overflow-x: hidden;
+        }
         }
 
         /* --- 动态颜料流动 Canvas 背景 --- */
@@ -135,7 +137,7 @@
             line-height: 1.9;
             font-size: 16px;
             letter-spacing: 1px;
-            background: rgb(180, 245, 225, 0.6);
+            background: rgb(180, 245, 225, 0.4);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border-radius: 16px;
@@ -143,14 +145,16 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .salutation {
+     .salutation {
             font-size: 20px;
             font-weight: bold;
-            color: var(--splat-yellow);
+            /* 🔽 2. 开头称呼：原本的荧光黄在浅色底上看不清，改用喷墨极具标志性的深紫罗兰色 🔽 */
+            color: #3b0099; 
             margin-bottom: 25px;
             border-left: 4px solid var(--splat-purple);
             padding-left: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            /* 🔽 3. 给称呼加一层淡淡的白边，防止和薄荷绿背景粘连 🔽 */
+            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
         }
 
         .paragraph {
@@ -159,7 +163,13 @@
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s ease;
-            text-shadow: 1px 1px 3px #111;
+            /* 🔽 4. 核心关键：原本的黑色阴影（#111）在浅色底上会变成脏脏的墨晕。
+                    现在改用清晰的【白色高亮描边】，就像贴纸的白边一样，不仅让字迹极度清晰，还非常有喷射的街头涂鸦感！ 🔽 */
+            text-shadow: 
+                1px 1px 0px #fff, 
+               -1px -1px 0px #fff, 
+                1px -1px 0px #fff, 
+               -1px 1px 0px #fff;
         }
 
             .paragraph.show {
@@ -177,11 +187,12 @@
             font-weight: bold;
         }
 
-        .signature {
+  .signature {
             text-align: right;
             margin-top: 45px;
             font-size: 14px;
-            color: #ddcfff;
+            color: #4a5568; /* 👈 改为深灰蓝色 */
+            text-shadow: 1px 1px 0px #fff; /* 👈 同样加上白色防吃字底纹 */
         }
 
         /* --- 底部彩蛋按钮 --- */
